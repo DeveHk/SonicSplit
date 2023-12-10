@@ -1,4 +1,4 @@
-name: AudioSep
+name: SonicSplit
 channels:
   - pytorch
   - nvidia

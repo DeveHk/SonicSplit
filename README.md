@@ -1,10 +1,10 @@
 # Separate Anything You Describe
-[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2308.05037) [![GitHub Stars](https://img.shields.io/github/stars/Audio-AGI/AudioSep?style=social)](https://github.com/Audio-AGI/AudioSep/) [![githubio](https://img.shields.io/badge/GitHub.io-Demo_Page-blue?logo=Github&style=flat-square)](https://audio-agi.github.io/Separate-Anything-You-Describe) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Audio-AGI/AudioSep/blob/main/AudioSep_Colab.ipynb) [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Audio-AGI/AudioSep) [![Replicate](https://replicate.com/cjwbw/audiosep/badge)](https://replicate.com/cjwbw/audiosep) 
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2308.05037) [![GitHub Stars](https://img.shields.io/github/stars/Audio-AGI/SonicSplit?style=social)](https://github.com/Audio-AGI/SonicSplit/) [![githubio](https://img.shields.io/badge/GitHub.io-Demo_Page-blue?logo=Github&style=flat-square)](https://audio-agi.github.io/Separate-Anything-You-Describe) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Audio-AGI/SonicSplit/blob/main/SonicSplit_Colab.ipynb) [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/Audio-AGI/SonicSplit) [![Replicate](https://replicate.com/cjwbw/sonicsplit/badge)](https://replicate.com/cjwbw/sonicsplit) 
 
 
-This repository contains the official implementation of ["Separate Anything You Describe"](https://audio-agi.github.io/Separate-Anything-You-Describe/AudioSep_arXiv.pdf).
+This repository contains the official implementation of ["Separate Anything You Describe"](https://audio-agi.github.io/Separate-Anything-You-Describe/SonicSplit_arXiv.pdf).
 
-We introduce AudioSep, a foundation model for open-domain sound separation with natural language queries. AudioSep demonstrates strong separation performance and impressive zero-shot generalization ability on numerous tasks, such as audio event separation, musical instrument separation, and speech enhancement. Check out the separated audio examples on the [Demo Page](https://audio-agi.github.io/Separate-Anything-You-Describe/)!
+We introduce SonicSplit, a foundation model for open-domain sound separation with natural language queries. SonicSplit demonstrates strong separation performance and impressive zero-shot generalization ability on numerous tasks, such as audio event separation, musical instrument separation, and speech enhancement. Check out the separated audio examples on the [Demo Page](https://audio-agi.github.io/Separate-Anything-You-Describe/)!
 
 <p align="center">
   <img align="middle" width="800" src="assets/results.png"/>
@@ -13,8 +13,8 @@ We introduce AudioSep, a foundation model for open-domain sound separation with 
 <hr>
 
 ## TODO
-- [x] AudioSep training & fine-tuning code release.
-- [x] AudioSep base model checkpoint release.
+- [x] SonicSplit training & fine-tuning code release.
+- [x] SonicSplit base model checkpoint release.
 - [x] Evaluation benchmark release.
 
 <hr>
@@ -23,12 +23,12 @@ We introduce AudioSep, a foundation model for open-domain sound separation with 
 Clone the repository and setup the conda environment: 
 
   ```shell
-  git clone https://github.com/Audio-AGI/AudioSep.git && \
-  cd AudioSep && \ 
+  git clone https://github.com/Audio-AGI/SonicSplit.git && \
+  cd SonicSplit && \ 
   conda env create -f environment.yml && \
-  conda activate AudioSep
+  conda activate SonicSplit
   ```
-Download [model weights](https://huggingface.co/spaces/Audio-AGI/AudioSep/tree/main/checkpoint) at `checkpoint/`.
+Download [model weights](https://huggingface.co/spaces/Audio-AGI/SonicSplit/tree/main/checkpoint) at `checkpoint/`.
 
 <hr>
 
@@ -36,21 +36,21 @@ Download [model weights](https://huggingface.co/spaces/Audio-AGI/AudioSep/tree/m
 
 
   ```python
-  from pipeline import build_audiosep, inference
+  from pipeline import build_sonicsplit, inference
   import torch
 
   device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-  model = build_audiosep(
-        config_yaml='config/audiosep_base.yaml', 
-        checkpoint_path='checkpoint/audiosep_base_4M_steps.ckpt', 
+  model = build_sonicsplit(
+        config_yaml='config/sonicsplit_base.yaml', 
+        checkpoint_path='checkpoint/sonicsplit_base_4M_steps.ckpt', 
         device=device)
 
   audio_file = 'path_to_audio_file'
   text = 'textual_description'
   output_file='separated_audio.wav'
 
-  # AudioSep processes the audio at 32 kHz sampling rate  
+  # SonicSplit processes the audio at 32 kHz sampling rate  
   inference(model, audio_file, text, output_file, device)
   ```
 
@@ -59,21 +59,21 @@ Download [model weights](https://huggingface.co/spaces/Audio-AGI/AudioSep/tree/m
 To load directly from Hugging Face, you can do the following:
 
   ```python
-  from models.audiosep import AudioSep
+  from models.sonicsplit import SonicSplit
   from utils import get_ss_model
   import torch
 
   device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-  ss_model = get_ss_model('config/audiosep_base.yaml')
+  ss_model = get_ss_model('config/sonicsplit_base.yaml')
 
-  model = AudioSep.from_pretrained("nielsr/audiosep-demo", ss_model=ss_model)
+  model = SonicSplit.from_pretrained("nielsr/sonicsplit-demo", ss_model=ss_model)
 
   audio_file = 'path_to_audio_file'
   text = 'textual_description'
   output_file='separated_audio.wav'
 
-  # AudioSep processes the audio at 32 kHz sampling rate  
+  # SonicSplit processes the audio at 32 kHz sampling rate  
   inference(model, audio_file, text, output_file, device)
   ```
 <hr>
@@ -89,7 +89,7 @@ To utilize your audio-text paired dataset:
 
 1. Format your dataset to match our JSON structure. Refer to the provided template at `datafiles/template.json`.
 
-2. Update the `config/audiosep_base.yaml` file by listing your formatted JSON data files under `datafiles`. For example:
+2. Update the `config/sonicsplit_base.yaml` file by listing your formatted JSON data files under `datafiles`. For example:
 
 ```yaml
 data:
@@ -99,14 +99,14 @@ data:
         ...
 ```
 
-Train AudioSep from scratch:
+Train SonicSplit from scratch:
   ```python
-  python train.py --workspace workspace/AudioSep --config_yaml config/audiosep_base.yaml --resume_checkpoint_path checkpoint/ ''
+  python train.py --workspace workspace/SonicSplit --config_yaml config/sonicsplit_base.yaml --resume_checkpoint_path checkpoint/ ''
   ```
 
-Finetune AudioSep from pretrained checkpoint:
+Finetune SonicSplit from pretrained checkpoint:
   ```python
-  python train.py --workspace workspace/AudioSep --config_yaml config/audiosep_base.yaml --resume_checkpoint_path path_to_checkpoint
+  python train.py --workspace workspace/SonicSplit --config_yaml config/sonicsplit_base.yaml --resume_checkpoint_path path_to_checkpoint
   ```
 
 <hr>
@@ -126,7 +126,7 @@ evaluation:
 ```
 Run benchmark inference script, the results will be saved at `eval_logs/`
 ```python
-python benchmark.py --checkpoint_path audiosep_base_4M_steps.ckpt
+python benchmark.py --checkpoint_path sonicsplit_base_4M_steps.ckpt
 
 """
 Evaluation Results:

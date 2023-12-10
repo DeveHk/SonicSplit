@@ -4,16 +4,16 @@
 import torch
 from cog import BasePredictor, Input, Path
 
-from pipeline import build_audiosep, inference
+from pipeline import build_sonicsplit, inference
 
 
 class Predictor(BasePredictor):
     def setup(self) -> None:
         """Load the model into memory to make running multiple predictions efficient"""
 
-        self.model = build_audiosep(
-            config_yaml="config/audiosep_base.yaml",
-            checkpoint_path="checkpoint/audiosep_base_4M_steps.ckpt",
+        self.model = build_sonicsplit(
+            config_yaml="config/sonicsplit_base.yaml",
+            checkpoint_path="checkpoint/sonicsplit_base_4M_steps.ckpt",
             device="cuda",
         )
 
@@ -26,6 +26,6 @@ class Predictor(BasePredictor):
 
         output_file = "/tmp/separated_audio.wav"
 
-        # AudioSep processes the audio at 32 kHz sampling rate
+        # SonicSplit processes the audio at 32 kHz sampling rate
         inference(self.model, str(audio_file), text, output_file, "cuda")
         return Path(output_file)

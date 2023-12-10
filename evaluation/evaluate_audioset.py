@@ -12,7 +12,7 @@ import librosa
 import lightning.pytorch as pl
 from models.clap_encoder import CLAP_Encoder
 
-sys.path.append('../AudioSep/')
+sys.path.append('../SonicSplit/')
 from utils import (
     load_ss_model,
     calculate_sdr,

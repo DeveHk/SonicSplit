@@ -10,7 +10,7 @@ from utils import parse_yaml, load_ss_model
 from models.clap_encoder import CLAP_Encoder
 
 
-def build_audiosep(config_yaml, checkpoint_path, device):
+def build_sonicsplit(config_yaml, checkpoint_path, device):
     configs = parse_yaml(config_yaml)
     
     query_encoder = CLAP_Encoder().eval()
@@ -20,7 +20,7 @@ def build_audiosep(config_yaml, checkpoint_path, device):
             query_encoder=query_encoder
         ).eval().to(device)
 
-    print(f'Load AudioSep model from [{checkpoint_path}]')
+    print(f'Load SonicSplit model from [{checkpoint_path}]')
     return model
 
 
@@ -54,8 +54,8 @@ def inference(model, audio_file, text, output_file, device='cuda', use_chunk=Fal
 
 if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = build_audiosep(
-        config_yaml='config/audiosep_base.yaml', 
+    model = build_sonicsplit(
+        config_yaml='config/sonicsplit_base.yaml', 
         checkpoint_path='checkpoint/step=3920000.ckpt', 
         device=device)
 

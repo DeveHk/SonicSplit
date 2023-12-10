@@ -10,7 +10,7 @@ from data.datamodules import *
 from utils import create_logging, parse_yaml
 from models.resunet import *
 from losses import get_loss_function
-from models.audiosep import AudioSep, get_model_class
+from models.sonicsplit import SonicSplit, get_model_class
 from data.waveform_mixers import SegmentMixer
 from models.clap_encoder import CLAP_Encoder
 from callbacks.base import CheckpointEveryNSteps
@@ -184,7 +184,7 @@ def train(args) -> NoReturn:
     if resume_checkpoint_path == "":
         resume_checkpoint_path = None
     else:
-        logging.info(f'Finetuning AudioSep with checkpoint [{resume_checkpoint_path}]')
+        logging.info(f'Finetuning SonicSplit with checkpoint [{resume_checkpoint_path}]')
 
     # Get directories and paths
     checkpoints_dir, logs_dir, tf_logs_dir, statistics_path = get_dirs(
@@ -231,7 +231,7 @@ def train(args) -> NoReturn:
     )
 
     # pytorch-lightning model
-    pl_model = AudioSep(
+    pl_model = SonicSplit(
         ss_model=ss_model,
         waveform_mixer=segment_mixer,
         query_encoder=query_encoder,

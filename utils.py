@@ -9,7 +9,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import yaml
-from models.audiosep import AudioSep, get_model_class
+from models.sonicsplit import SonicSplit, get_model_class
 
 
 def ignore_warnings():
@@ -384,7 +384,7 @@ def load_ss_model(
     )
 
     # Load PyTorch Lightning model
-    pl_model = AudioSep.load_from_checkpoint(
+    pl_model = SonicSplit.load_from_checkpoint(
         checkpoint_path=checkpoint_path,
         strict=False,
         ss_model=ss_model,

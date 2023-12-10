@@ -17,7 +17,7 @@ from utils import (
     get_mean_sdr_from_dict,
 )
 
-def eval(checkpoint_path, config_yaml='config/audiosep_base.yaml'):
+def eval(checkpoint_path, config_yaml='config/sonicsplit_base.yaml'):
 
     log_dir = 'eval_logs'
     os.makedirs(log_dir, exist_ok=True)
@@ -106,7 +106,7 @@ def eval(checkpoint_path, config_yaml='config/audiosep_base.yaml'):
 
 
 if __name__ == '__main__':
-    eval(checkpoint_path='checkpoint/audiosep_base.ckpt')
+    eval(checkpoint_path='checkpoint/sonicsplit_base.ckpt')
 
    
 
